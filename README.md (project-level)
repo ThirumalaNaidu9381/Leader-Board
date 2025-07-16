@@ -1,0 +1,24 @@
+# 🏆 Leaderboard App
+
+A real-time leaderboard system where users can be added, selected, and awarded random points.
+
+## Tech Stack
+
+- **Frontend**: ReactJS + Vite
+- **Backend**: Node.js + Express + MongoDB
+- **Realtime**: Socket.io
+
+---
+
+## 📦 Features
+
+- Realtime leaderboard updates
+- Add users dynamically
+- Claim random points (1–10)
+- Track and display claim history
+- Ranking updates automatically
+- MongoDB for data persistence
+
+---
+
+## 🛠️ Project Structure
