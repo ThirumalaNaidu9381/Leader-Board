@@ -6,6 +6,7 @@ import { Server } from 'socket.io';
 import http from 'http';
 
 import userRoutes from './routes/userRoutes.js';
+// import otherRoutes from './routes/otherRoutes.js'; // Add more as needed
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(cors({
   credentials: true
 }));
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
@@ -37,16 +39,22 @@ const io = new Server(server, {
 // Attach io to app
 app.set('io', io);
 
-// 🔥 Middleware to make io available in routes via req.io
+// Middleware to attach io to req
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
 
-// Routes
-app.use('/api/users', userRoutes);
+// ✅ Add a basic root route to avoid "Cannot GET /" error
+app.get('/', (req, res) => {
+  res.send('Backend server is running');
+});
 
-// Socket.io events
+// API Routes
+app.use('/api/users', userRoutes);
+// app.use('/api/claims', claimRoutes); // Uncomment when claimRoutes is ready
+
+// Socket.io connection handler
 io.on('connection', (socket) => {
   console.log('Socket connected:', socket.id);
 
